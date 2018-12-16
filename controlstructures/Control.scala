@@ -7,7 +7,7 @@ object Control extends App {
     // Functional
     val filename2 = if (!args.isEmpty) args(0)
                     else "default.txt"
-    
+
     println("filename1 = " + filename1)
     println("filename2 = " + filename2)
 
@@ -33,4 +33,38 @@ object Control extends App {
 
     println("gcd1(4, 6) = " + d1)
     println("gcd2(4, 6) = " + d2)
+
+    // For
+    println("Print files' names")
+    val FilesHere = (new java.io.File(".")).listFiles
+    for (file <- FilesHere)
+        println(file)
+
+    println("Print scala file names only.")
+    for(file <- FilesHere if file.getName.endsWith(".scala"))
+        println(file)
+
+    println("Print grep '.*gcd.*' of scala files.")
+    def fileLines(file: java.io.File) =
+        scala.io.Source.fromFile(file).getLines().toList
+
+    def grep(pattern: String) =
+        for {
+            file <- FilesHere
+            if file.getName.endsWith(".scala")
+            line <- fileLines(file)
+            trimmed = line.trim
+            if trimmed.matches(pattern)
+        } println(file + ": " + trimmed)
+
+    grep(".*gcd.*")
+
+    println("scalaFiles: ")
+    val scalaFiles =
+        for {
+            file <- FilesHere
+            if file.getName.endsWith(".scala")
+        } yield file.getName
+
+    scalaFiles.foreach(println)
 }
