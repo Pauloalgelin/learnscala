@@ -67,4 +67,42 @@ object Control extends App {
         } yield file.getName
 
     scalaFiles.foreach(println)
+
+    // Try Catch Finally
+
+    import java.io.FileReader
+    import java.io.FileNotFoundException
+
+    try {
+        val f = new FileReader("input.txt")
+        // use file
+    } catch {
+        case ex: FileNotFoundException => println(ex)
+        case unknown: Throwable => println("AEHOOOO " + unknown)
+    }
+
+    // The following code can be used to close a resource,
+    // but it's probably not the better way,
+    // because you can't open the file in the try block then
+    // close it in the finally,
+    // given that the val in try is local to its block.
+    try {
+        //something
+    } finally {
+        // this always happens
+    }
+
+    import java.net.URL
+    import java.net.MalformedURLException
+
+    def urlFor(path: String) = {
+        try {
+            new URL(path)
+        } catch {
+           case e: MalformedURLException => new URL("http://www.scala-lang.org")
+        }
+    }
+
+    val imeUrl = urlFor("https://bcc.ime.usp.br")
+    println(imeUrl)
 }
