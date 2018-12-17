@@ -105,4 +105,24 @@ object Control extends App {
 
     val imeUrl = urlFor("https://bcc.ime.usp.br")
     println(imeUrl)
+
+    // Match
+
+    val firstArg = if (args.length > 0) args(0) else ""
+    firstArg match {
+        case "salt" => println("pepper")
+        case "chips" => println("salsa")
+        case _ => println("idk")
+    }
+
+    val secondArg = if (args.length > 1) args(1) else ""
+    val friend = {
+        secondArg match {
+            case "dog" => "woof"
+            case "cat" => "meow"
+            case "fox" => "what does the fox say?"
+            case _ => "idk"
+        }
+    }
+    println(friend)
 }
