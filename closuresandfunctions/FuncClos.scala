@@ -84,5 +84,13 @@ object FuncClos {
         println("speed(100, 10): " + speed0)
         println("speed(distance = 100, time = 10): " + speed1)
         println("speed(time = 10, distance = 100): " + speed2)
+
+        def greet(name: String = "unknown") = println("Hi, " + name) // Default argument
+        greet()
+        greet("Paulo")
+
+        def greet1(greeting: String = "Hello", name: String) = println(greeting + ", " + name)
+        greet1(name = "Bob")
+        greet1("Cheers", "mate")
     }
 }
