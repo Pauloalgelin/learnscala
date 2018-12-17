@@ -61,5 +61,13 @@ object FuncClos {
         val sumto1and3 = sum(1, _: Int, 3)
         val sum2to1and3 = sumto1and3(2)
         println("sumto1and3(2): " + sum2to1and3)
+
+        def increaser(more: Int) = (x: Int) => x + more
+        val increaser1 = increaser(1)
+        val increaser2 = increaser(2)
+        val inc1of5 = increaser1(5)
+        val inc2of5 = increaser2(5)
+        println("increaser1(5): " + inc1of5)
+        println("increaser2(5): " + inc2of5)
     }
 }
