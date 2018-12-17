@@ -36,5 +36,13 @@ object FuncClos {
         }
         val num4 = increasehello(4)
         println("increasehello(4): " + num4)
+
+        val myNums = List(-11, -10, -5, 0, 5, 10)
+        println("myNums: " + myNums)
+        myNums.foreach(x => print(x + " "))
+        println("")
+
+        val positives = myNums.filter(x => x > 0)
+        println("positives: " + positives)
     }
 }
