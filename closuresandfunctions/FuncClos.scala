@@ -77,7 +77,7 @@ object FuncClos {
         echo(myL: _*)
         echo()
 
-        def speed(distance: Float, time: Float): Float = distance / time
+        def speed(distance: Float, time: Float): Float = distance / time // Named parameter
         val speed0 = speed(100, 10)
         val speed1 = speed(distance = 100, time = 10)
         val speed2 = speed(time = 10, distance = 100)
