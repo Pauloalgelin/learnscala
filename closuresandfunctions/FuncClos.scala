@@ -69,5 +69,12 @@ object FuncClos {
         val inc2of5 = increaser2(5)
         println("increaser1(5): " + inc1of5)
         println("increaser2(5): " + inc2of5)
+
+        def echo(args: String*) = args.foreach(println) // Repeated parameter
+        echo("hi")
+        echo("hi", "hi")
+        val myL = List("hey", "hey", "hey")
+        echo(myL: _*)
+        echo()
     }
 }
