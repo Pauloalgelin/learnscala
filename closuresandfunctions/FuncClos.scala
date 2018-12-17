@@ -76,5 +76,13 @@ object FuncClos {
         val myL = List("hey", "hey", "hey")
         echo(myL: _*)
         echo()
+
+        def speed(distance: Float, time: Float): Float = distance / time
+        val speed0 = speed(100, 10)
+        val speed1 = speed(distance = 100, time = 10)
+        val speed2 = speed(time = 10, distance = 100)
+        println("speed(100, 10): " + speed0)
+        println("speed(distance = 100, time = 10): " + speed1)
+        println("speed(time = 10, distance = 100): " + speed2)
     }
 }
