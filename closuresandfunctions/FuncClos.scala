@@ -47,5 +47,19 @@ object FuncClos {
 
         val newpositives = myNums.filter(_ > 0) // Placeholder syntax
         println("newpositives: " + newpositives)
+
+        myNums.foreach(println _) // Partially applied function
+
+        def sum(a: Int, b: Int, c: Int) = a + b + c
+        val sum123 = sum(1, 2, 3)
+        println("sum(1, 2, 3): " + sum123)
+
+        val three = sum _
+        val sumthree = three(1, 2, 3)
+        println("three(1, 2, 3): " + sumthree)
+
+        val sumto1and3 = sum(1, _: Int, 3)
+        val sum2to1and3 = sumto1and3(2)
+        println("sumto1and3(2): " + sum2to1and3)
     }
 }
