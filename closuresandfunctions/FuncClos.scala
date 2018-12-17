@@ -42,7 +42,10 @@ object FuncClos {
         myNums.foreach(x => print(x + " "))
         println("")
 
-        val positives = myNums.filter(x => x > 0)
+        val positives = myNums.filter(x => x > 0) // Target typing
         println("positives: " + positives)
+
+        val newpositives = myNums.filter(_ > 0) // Placeholder syntax
+        println("newpositives: " + newpositives)
     }
 }
