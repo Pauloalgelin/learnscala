@@ -92,5 +92,23 @@ object FuncClos {
         def greet1(greeting: String = "Hello", name: String) = println(greeting + ", " + name)
         greet1(name = "Bob")
         greet1("Cheers", "mate")
+
+        def isGoodEnough(guess: Double, target: Double = 10.0, epsilon: Double = 0.1): Boolean =
+            (guess.abs - target.abs).abs <= epsilon.abs
+        val is0 = isGoodEnough(9)
+        val is1 = isGoodEnough(9.9)
+        val is2 = isGoodEnough(7, 8, 1)
+        println("isGoodEnough(9): " + is0)
+        println("isGoodEnough(9.9): " + is1)
+        println("isGoodEnough(7, 8, 1): " + is2)
+
+        def improve(value: Double, delta: Double = 0.1) = value - delta
+
+        def approximate(guess: Double): Double =
+            if (isGoodEnough(guess)) guess
+            else approximate(improve(guess))
+
+        val ap = approximate(7.75)
+        println("approximate(7.75): " + ap)
     }
 }
