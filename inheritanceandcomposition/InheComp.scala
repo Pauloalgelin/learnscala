@@ -13,6 +13,11 @@ class ParametricArrayElement(
     override val height: Int
 ) extends Element
 
+class LineElement(private val s: String) extends ArrayElement(Array(s)) {
+    override val height = 1
+    override val width = s.length
+}
+
 object Element {
     def main(args: Array[String]): Unit = {
         val ar = Array("Hello", "world")
@@ -31,5 +36,10 @@ object Element {
         val wheight = w.height
         println(s"w.contents(0) = $wcontents0")
         println(s"w.height = $wheight")
+
+        val lr = "Paulo"
+        val le = new LineElement(lr)
+        val lewidth = le.width
+        println(s"le.width = $lr.length = $lewidth")
     }
 }
