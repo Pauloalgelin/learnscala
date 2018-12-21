@@ -2,10 +2,12 @@ abstract class Element {
     def contents: Array[String]
     def height: Int = contents.length
     def width: Int = if (height == 0) 0 else contents(0).length
+    def demo() = {println("Element's implementation invoked")}
 }
 
 class ArrayElement(conts: Array[String]) extends Element {
     def contents: Array[String] = conts
+    override def demo() = {println("ArrayElement's implementation invoked")}
 }
 
 class ParametricArrayElement(
@@ -16,6 +18,16 @@ class ParametricArrayElement(
 class LineElement(private val s: String) extends ArrayElement(Array(s)) {
     override val height = 1
     override val width = s.length
+    override def demo() = {println("LineElement's implementation invoked")}
+}
+
+class UniformElement(
+    ch: Char,
+    override val height: Int,
+    override val width: Int
+) extends Element {
+    private val line = ch.toString * width
+    def contents = Array.fill(height)(line)
 }
 
 object Element {
@@ -41,5 +53,21 @@ object Element {
         val le = new LineElement(lr)
         val lewidth = le.width
         println(s"le.width = $lr.length = $lewidth")
+
+        val c: Char = 'a'
+        val hei = 10
+        val wid = 2
+        val ue = new UniformElement(c, hei, wid)
+        val uecontents = ue.contents
+        println("ue.contents =");
+        ue.contents.foreach(println)
+
+        def invokedDemo(e: Element) = {
+            e.demo()
+        }
+
+        print("ArrayElement: "); invokedDemo(new ArrayElement(Array("eu")))
+        print("LineElement: "); invokedDemo(new LineElement("moo"))
+        print("UniformElement: "); invokedDemo(new UniformElement('a', 3, 4))
     }
 }
