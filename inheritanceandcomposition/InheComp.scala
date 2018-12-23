@@ -3,11 +3,20 @@ abstract class Element {
     def height: Int = contents.length
     def width: Int = if (height == 0) 0 else contents(0).length
     def demo() = {println("Element's implementation invoked")}
+    def above(that: Element): Element =
+        new ArrayElement(this.contents ++ that.contents)
+    def beside(that: Element): Element =
+        new ArrayElement(
+            for(
+                (line0, line1) <- this.contents zip that.contents
+            ) yield line0 + line1
+        )
+    override def toString = contents mkString "\n"
 }
 
 class ArrayElement(conts: Array[String]) extends Element {
     def contents: Array[String] = conts
-    final override def demo() = {println("ArrayElement's implementation invoked")}
+    override def demo() = {println("ArrayElement's implementation invoked")}
 }
 
 class ParametricArrayElement(
@@ -38,7 +47,7 @@ object Element {
         println(s"ae.width = $aewidth")
 
         val er = ("aehoo")
-        val e: Element = new ArrayElement(Array(er))
+        val e: Element = new ArrayElement(Array(er, er))
         val eheight = e.height
         println(s"e.height = $eheight")
 
@@ -69,5 +78,11 @@ object Element {
         print("ArrayElement: "); invokedDemo(new ArrayElement(Array("eu")))
         print("LineElement: "); invokedDemo(new LineElement("moo"))
         print("UniformElement: "); invokedDemo(new UniformElement('a', 3, 4))
+
+        val aeabovee = ae above e
+        println(aeabovee)
+
+        val aebesidee = ae beside e
+        println(aebesidee)
     }
 }
