@@ -1,12 +1,14 @@
+import Element.elem
+
 abstract class Element {
     def contents: Array[String]
     def height: Int = contents.length
     def width: Int = if (height == 0) 0 else contents(0).length
     def demo() = {println("Element's implementation invoked")}
     def above(that: Element): Element =
-        new ArrayElement(this.contents ++ that.contents)
+        elem(this.contents ++ that.contents)
     def beside(that: Element): Element =
-        new ArrayElement(
+        elem(
             for(
                 (line0, line1) <- this.contents zip that.contents
             ) yield line0 + line1
@@ -97,17 +99,17 @@ object run {
         println(aebesidee)
 
         val are = Array("este", "teste")
-        val ear = Element.elem(are)
+        val ear = elem(are)
         println(ear)
 
         val cc: Char = 'j'
         val wi = 3
         val he = 8
-        val un = Element.elem(cc, width = wi, height = he)
+        val un = elem(cc, width = wi, height = he)
         println(un)
 
         val st = "salve regina"
-        val li = Element.elem(st)
+        val li = elem(st)
         println(li)
     }
 }
