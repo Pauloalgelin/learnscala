@@ -14,6 +14,17 @@ abstract class Element {
     override def toString = contents mkString "\n"
 }
 
+object Element {
+    def elem(contents: Array[String]): Element =
+        new ArrayElement(contents)
+
+    def elem(ch: Char, width: Int, height: Int): Element =
+        new UniformElement(ch = ch, width = width, height = height)
+
+    def elem(line: String): Element =
+        new LineElement(line)
+}
+
 class ArrayElement(conts: Array[String]) extends Element {
     def contents: Array[String] = conts
     override def demo() = {println("ArrayElement's implementation invoked")}
@@ -39,7 +50,7 @@ class UniformElement(
     def contents = Array.fill(height)(line)
 }
 
-object Element {
+object run {
     def main(args: Array[String]): Unit = {
         val ar = Array("Hello", "world")
         val ae = new ArrayElement(ar)
@@ -84,5 +95,19 @@ object Element {
 
         val aebesidee = ae beside e
         println(aebesidee)
+
+        val are = Array("este", "teste")
+        val ear = Element.elem(are)
+        println(ear)
+
+        val cc: Char = 'j'
+        val wi = 3
+        val he = 8
+        val un = Element.elem(cc, width = wi, height = he)
+        println(un)
+
+        val st = "salve regina"
+        val li = Element.elem(st)
+        println(li)
     }
 }
