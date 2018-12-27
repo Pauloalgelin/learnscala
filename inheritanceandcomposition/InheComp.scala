@@ -2,21 +2,61 @@ import Element.elem
 
 abstract class Element {
     def contents: Array[String]
+    def width: Int = contents(0).length
     def height: Int = contents.length
-    def width: Int = if (height == 0) 0 else contents(0).length
-    def demo() = {println("Element's implementation invoked")}
-    def above(that: Element): Element =
-        elem(this.contents ++ that.contents)
-    def beside(that: Element): Element =
+    def above(that: Element): Element = {
+        val this1 = this widen that.width
+        val that1 = that widen this.width
+        elem(this1.contents ++ that1.contents)
+    }
+    def beside(that: Element): Element = {
+        val this1 = this heighten that.height
+        val that1 = that heighten this.height
         elem(
-            for(
-                (line0, line1) <- this.contents zip that.contents
-            ) yield line0 + line1
-        )
+        for ((line1, line2) <- this1.contents zip that1.contents)
+        yield line1 + line2)
+    }
+    def widen(w: Int): Element =
+        if (w <= width) this
+        else {
+            val left = elem(' ', (w - width) / 2, height)
+            val right = elem(' ', w - width - left.width, height)
+            left beside this beside right
+        }
+    def heighten(h: Int): Element =
+        if (h <= height) this
+        else {
+            val top = elem(' ', width, (h - height) / 2)
+            val bot = elem(' ', width, h - height - top.height)
+            top above this above bot
+        }
     override def toString = contents mkString "\n"
 }
 
 object Element {
+    private class ArrayElement(
+        val contents: Array[String])
+    extends Element
+
+    private class ParametricArrayElement(
+        val contents: Array[String],
+        override val height: Int
+    ) extends Element
+
+    private class LineElement(private val s: String) extends ArrayElement(Array(s)) {
+        override val height = 1
+        override val width = s.length
+    }
+
+    private class UniformElement(
+        ch: Char,
+        override val height: Int,
+        override val width: Int
+    ) extends Element {
+        private val line = ch.toString * width
+        def contents = Array.fill(height)(line)
+    }
+
     def elem(contents: Array[String]): Element =
         new ArrayElement(contents)
 
@@ -25,31 +65,6 @@ object Element {
 
     def elem(line: String): Element =
         new LineElement(line)
-}
-
-class ArrayElement(conts: Array[String]) extends Element {
-    def contents: Array[String] = conts
-    override def demo() = {println("ArrayElement's implementation invoked")}
-}
-
-class ParametricArrayElement(
-    val contents: Array[String],
-    override val height: Int
-) extends Element
-
-class LineElement(private val s: String) extends ArrayElement(Array(s)) {
-    override val height = 1
-    override val width = s.length
-    override def demo() = {println("LineElement's implementation invoked")}
-}
-
-class UniformElement(
-    ch: Char,
-    override val height: Int,
-    override val width: Int
-) extends Element {
-    private val line = ch.toString * width
-    def contents = Array.fill(height)(line)
 }
 
 object run {
@@ -84,14 +99,6 @@ object run {
         println("ue.contents =");
         ue.contents.foreach(println)
 
-        def invokedDemo(e: Element) = {
-            e.demo()
-        }
-
-        print("ArrayElement: "); invokedDemo(new ArrayElement(Array("eu")))
-        print("LineElement: "); invokedDemo(new LineElement("moo"))
-        print("UniformElement: "); invokedDemo(new UniformElement('a', 3, 4))
-
         val aeabovee = ae above e
         println(aeabovee)
 
@@ -111,5 +118,35 @@ object run {
         val st = "salve regina"
         val li = elem(st)
         println(li)
+        println
+        val earbesideli = ear beside li
+        println(earbesideli)
+    }
+}
+
+object Spiral {
+    val space = elem(" ")
+    val corner = elem("+")
+    def spiral(nEdges: Int, direction: Int): Element = {
+        if (nEdges == 1)
+            elem("+")
+        else {
+            val sp = spiral(nEdges - 1, (direction + 3) % 4)
+            def verticalBar = elem('|', 1, sp.height)
+            def horizontalBar = elem('-', sp.width, 1)
+            if (direction == 0)
+                (corner beside horizontalBar) above (sp beside space)
+            else if (direction == 1)
+                (sp above space) beside (corner above verticalBar)
+            else if (direction == 2)
+                (space beside sp) above (horizontalBar beside corner)
+            else
+                (verticalBar above corner) beside (space above sp)
+        }
+    }
+
+    def main(args: Array[String]) = {
+        val nSides = args(0).toInt
+        println(spiral(nSides, 0))
     }
 }
