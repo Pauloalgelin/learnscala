@@ -13,5 +13,9 @@ object run {
         val fo0 = new Frog
         println(fo0)
         fo0.philosophize
+
+        val fo1: Philosophical = new Frog
+        println(fo1)
+        fo1.philosophize
     }
 }
