@@ -1,10 +1,14 @@
+class Animal
+
 trait Philosophical {
     def philosophize = {
         println("I consume memory, therefore I am!")
     }
 }
 
-class Frog extends Philosophical {
+trait HasLegs
+
+class Frog extends Animal with Philosophical with HasLegs {
     override def toString = "green"
 }
 
